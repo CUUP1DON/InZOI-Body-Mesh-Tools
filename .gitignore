@@ -1,0 +1,16 @@
+# Pre-built / copied outputs (keep `source/` only in Git)
+**/compiled/
+
+# Unreal Engine build artifacts (if you build inside this repo)
+Binaries/
+Intermediate/
+Intermediate/Build/
+Saved/
+DerivedDataCache/
+.vs/
+*.sln
+*.suo
+*.user
+*.VC.db
+*.opensdf
+*.sdf
