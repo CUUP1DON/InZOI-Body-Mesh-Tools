@@ -63,6 +63,12 @@ public:
     UFUNCTION(BlueprintCallable, CallInEditor, Category = "inZOI|Morph")
     static bool CopyB1MorphUserData(USkeletalMesh* SourceMesh, USkeletalMesh* TargetMesh, bool bCopyPostProcessAnimBlueprint);
 
+    UFUNCTION(BlueprintCallable, CallInEditor, Category = "inZOI|Morph")
+    static bool ImportB1MorphUserDataFromFModelJsonFile(USkeletalMesh* TargetMesh, const FString& JsonFilePath, FString& OutMessage);
+
+    UFUNCTION(BlueprintCallable, CallInEditor, Category = "inZOI|Morph")
+    static bool SetPostProcessAnimBlueprintByClassPath(USkeletalMesh* TargetMesh, const FString& AnimBlueprintGeneratedClassPath, FString& OutMessage);
+
     UFUNCTION(BlueprintCallable, Category = "inZOI|Morph")
     static UB1MorphTargetUserData* GetB1MorphUserData(USkeletalMesh* Mesh);
 };

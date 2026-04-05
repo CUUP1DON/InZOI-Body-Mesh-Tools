@@ -13,7 +13,9 @@ namespace UnrealBuildTool.Rules
                 {
                     "Core",
                     "CoreUObject",
-                    "Engine"
+                    "Engine",
+                    "Json",
+                    "JsonUtilities"
                 }
             );
         }
