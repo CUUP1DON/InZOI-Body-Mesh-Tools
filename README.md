@@ -5,6 +5,9 @@
 ## Requirements
 Each plugin is made for a specific Unreal version: Unreal Engine 5.4.4, Unreal Engine 5.6.0 and Inzoi ModKit 5.4.4
 
+> [!IMPORTANT]
+>On April 9, InZOI moves to Unreal Engine 5.6. This release includes a 5.6 build of the plugin. After that date, the 5.4.4 plugin build will no longer be updated or maintained.
+
 ## Download
 To download the plugin, go to [Releases](https://github.com/CUUP1DON/InZOI-Body-Mesh-Tools/releases) and click the .zip for your version of Unreal.
 Download The required body JSONs too. They will be kept up to date.
