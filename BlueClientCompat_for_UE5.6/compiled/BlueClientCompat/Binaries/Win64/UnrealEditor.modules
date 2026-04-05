@@ -1,0 +1,8 @@
+{
+	"BuildId": "104f5fed-55a9-4b1d-b1cc-634fad59be67",
+	"Modules": 
+	{
+		"BlueClient": "UnrealEditor-BlueClient.dll",
+		"BlueClientCompatEditor": "UnrealEditor-BlueClientCompatEditor.dll"
+	}
+}

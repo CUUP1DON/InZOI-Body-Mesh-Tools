@@ -1,0 +1,20 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "1.0",
+  "FriendlyName": "BlueClient Compatibility",
+  "Description": "Adds BlueClient morph user-data types so inZOI slider data survives Unreal cooking.",
+  "Category": "inZOI",
+  "CreatedBy": "Local Modding Tools",
+  "EnabledByDefault": false,
+  "CanContainContent": false,
+  "IsBetaVersion": true,
+  "Installed": false,
+  "Modules": [
+    {
+      "Name": "BlueClient",
+      "Type": "Runtime",
+      "LoadingPhase": "PreDefault"
+    }
+  ]
+}
