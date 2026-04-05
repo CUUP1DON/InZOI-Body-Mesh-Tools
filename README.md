@@ -2,6 +2,8 @@
 > [!IMPORTANT]
 > This plugin was created using the help of claude.ai.
 
+This Unreal Engine plugin serializes B1 morph target data as an Asset User Data object, allowing it to survive cooking and packaging so that sliders work with custom body meshes in InZOI.
+
 ## Requirements
 Each plugin is made for a specific Unreal version: 5.4.4, 5.6.0 and Inzoi ModKit 5.4.4
 
