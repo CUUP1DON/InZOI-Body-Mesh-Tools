@@ -6,7 +6,7 @@
 Each plugin is made for a specific Unreal version: Unreal Engine 5.4.4, Unreal Engine 5.6.0 and Inzoi ModKit 5.4.4
 
 ## Download
-To download the plugin, go to [Releases](https://github.com/CUUP1DON/TS4SimRipper/releases) and click the .zip for your version of Unreal.
+To download the plugin, go to [Releases](https://github.com/CUUP1DON/InZOI-Body-Mesh-Tools/releases) and click the .zip for your version of Unreal.
 Download The required body JSONs too. They will be kept up to date.
 
 ## Install
