@@ -1,8 +1,0 @@
-{
-	"BuildId": "7b4807f3-0cb0-4c48-8382-d54da826edac",
-	"Modules": 
-	{
-		"B1MorphCompat": "UnrealEditor-B1MorphCompat.dll",
-		"B1MorphCompatEditor": "UnrealEditor-B1MorphCompatEditor.dll"
-	}
-}
