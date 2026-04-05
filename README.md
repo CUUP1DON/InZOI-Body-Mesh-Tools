@@ -6,7 +6,7 @@
 Each plugin is made for a specific Unreal version: Unreal Engine 5.4.4, Unreal Engine 5.6.0 and Inzoi ModKit 5.4.4
 
 > [!IMPORTANT]
->On April 9, InZOI moves to Unreal Engine 5.6. This release includes a 5.6 build of the plugin. After that date, the 5.4.4 plugin build will no longer be updated or maintained.
+>On April 23rd, InZOI moves to Unreal Engine 5.6. This release includes a 5.6 build of the plugin. After that date, the 5.4.4 plugin build will no longer be updated or maintained.
 
 ## Things To Note Before Use
 Unreal may freeze during transfer. The tool loads and parses the entire JSON file (including all morph data and 10,000+ per-vertex deltas), so Unreal can stop responding for a while. Let it finish and do not force-quit the editor. Opening the skeletal mesh afterward may also freeze the editor while Unreal loads the mesh and the new asset user data. Wait for it to finish and do not close Unreal. Expect the same when closing the window.
