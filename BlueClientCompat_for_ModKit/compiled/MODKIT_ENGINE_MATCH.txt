@@ -1,29 +1,82 @@
-Engine version warning (Mod Kit 5.4.4)
-======================================
+BlueClientCompat Plugin - Engine Match & Build Guide
+=====================================================
 
-The inZOI Mod Kit editor is built from a **custom** Unreal 5.4.4 tree. Plugin **.dll** files must be
-compiled against **that** editor binary, not a stock Epic UE 5.4.4 install. If Unreal reports:
+Engine: inZOI Mod Kit (custom Unreal 5.4.4)
+BuildId: 7b4807f3-0cb0-4c48-8382-d54da826edac
 
-  "missing or built with a different engine version" for B1MorphCompat / B1MorphCompatEditor
+The inZOI Mod Kit ships a custom UE 5.4.4 build. Plugin DLLs must match
+the Mod Kit's BuildId or the editor will refuse to load them and ask to
+rebuild.
 
-then the **Binaries** in this folder were built with a **different** engine than your Mod Kit.
+------------------------------------------------------------------------
+COMPILING FROM SOURCE (source/ folder)
+------------------------------------------------------------------------
+IMPORTANT: The inZOI Mod Kit does NOT ship engine headers (Engine\Source
+only contains Programs\). This means you CANNOT compile C++ plugins
+directly inside the Mod Kit. You must compile against a stock Epic
+Unreal Engine 5.4.4 install, then patch the BuildId to match the
+Mod Kit.
 
-Fix (recommended)
--------------------
-Keep this release's **BlueClientCompat.uplugin**, **Resources/**, and **Config/**, but replace
-**Binaries/** with the ones from the **official Mod Kit** plugin that shipped with your kit (same
-modules, same engine):
+Prerequisites:
+  - Epic Unreal Engine 5.4.4 installed (via Epic Games Launcher)
+  - Visual Studio 2022 with C++ game dev workload
 
-  From (example path on your PC):
-    <inZOIModKit>/Plugins/B1MorphCompat/Binaries/
-    <inZOIModKit>/Plugins/B1MorphCompat/Binaries/Win64/UnrealEditor.modules
+Steps:
 
-  Into:
-    <YourProject>/Plugins/BlueClientCompat/Binaries/
+1. Create a blank C++ UE 5.4.4 project, or use an existing one.
 
-Rename the plugin folder to **BlueClientCompat** only; do not change DLL file names.
+2. Copy the "source/" folder contents into that project's Plugins:
 
-Fix (Epic UE 5.4.4 only)
-------------------------
-If you open a **stock** Epic Unreal Engine **5.4.4** editor (not Mod Kit), the **compiled/**
-**Binaries** built with RunUAT against that same Epic install should load without this warning.
+     <UE5.4.4_Project>\Plugins\BlueClientCompat\
+
+   So the layout looks like:
+     Plugins\BlueClientCompat\BlueClientCompat.uplugin
+     Plugins\BlueClientCompat\Source\B1MorphCompat\...
+     Plugins\BlueClientCompat\Source\B1MorphCompatEditor\...
+     Plugins\BlueClientCompat\Config\FilterPlugin.ini
+     Plugins\BlueClientCompat\Resources\Icon128.png
+
+3. Compile using RunUAT from your stock Epic UE 5.4.4 install:
+
+     "<UE5.4.4>\Engine\Build\BatchFiles\RunUAT.bat" ^
+       BuildPlugin ^
+       -Plugin="<UE5.4.4_Project>\Plugins\BlueClientCompat\BlueClientCompat.uplugin" ^
+       -Package="<output_folder>" ^
+       -TargetPlatforms=Win64 ^
+       -Rocket
+
+   Or just open the project in the stock UE 5.4.4 editor and let it
+   compile automatically.
+
+4. After compilation, the Binaries\Win64\ folder will contain:
+     UnrealEditor-B1MorphCompat.dll
+     UnrealEditor-B1MorphCompatEditor.dll
+     UnrealEditor.modules
+
+5. PATCH THE BUILDID for Mod Kit compatibility:
+   Open the compiled UnrealEditor.modules and replace the BuildId
+   with the Mod Kit's BuildId (see below). Without this step the
+   Mod Kit editor will reject the DLLs.
+
+6. Copy the patched plugin into the Mod Kit:
+     <inZOIModKit>\inZOIModKit\Plugins\BlueClientCompat\
+
+------------------------------------------------------------------------
+FIXING BUILDID MISMATCH
+------------------------------------------------------------------------
+If the editor says the plugin was "built with a different engine version":
+
+1. Open:  Plugins\BlueClientCompat\Binaries\Win64\UnrealEditor.modules
+2. Find the "BuildId" value.
+3. Compare it to the Mod Kit engine's BuildId in:
+     <inZOIModKit>\Engine\Binaries\Win64\UnrealEditor.modules
+4. Replace the plugin's BuildId with the engine's BuildId.
+5. Also remove "EngineVersion" from BlueClientCompat.uplugin if present.
+
+Current Mod Kit BuildId: 7b4807f3-0cb0-4c48-8382-d54da826edac
+
+------------------------------------------------------------------------
+MODULES
+------------------------------------------------------------------------
+  B1MorphCompat         (Runtime)  - morph target user-data types
+  B1MorphCompatEditor   (Editor)   - editor tooling & transfer widget
