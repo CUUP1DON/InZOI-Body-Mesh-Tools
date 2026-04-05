@@ -2,7 +2,7 @@
 	"BuildId": "0e01dc95-127d-4434-b6cf-f886466e341e",
 	"Modules": 
 	{
-		"BlueClient": "UnrealEditor-BlueClient.dll",
-		"BlueClientCompatEditor": "UnrealEditor-BlueClientCompatEditor.dll"
+		"B1MorphCompat": "UnrealEditor-B1MorphCompat.dll",
+		"B1MorphCompatEditor": "UnrealEditor-B1MorphCompatEditor.dll"
 	}
 }

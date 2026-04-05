@@ -1,0 +1,29 @@
+Engine version warning (Mod Kit 5.4.4)
+======================================
+
+The inZOI Mod Kit editor is built from a **custom** Unreal 5.4.4 tree. Plugin **.dll** files must be
+compiled against **that** editor binary, not a stock Epic UE 5.4.4 install. If Unreal reports:
+
+  "missing or built with a different engine version" for B1MorphCompat / B1MorphCompatEditor
+
+then the **Binaries** in this folder were built with a **different** engine than your Mod Kit.
+
+Fix (recommended)
+-------------------
+Keep this release's **BlueClientCompat.uplugin**, **Resources/**, and **Config/**, but replace
+**Binaries/** with the ones from the **official Mod Kit** plugin that shipped with your kit (same
+modules, same engine):
+
+  From (example path on your PC):
+    <inZOIModKit>/Plugins/B1MorphCompat/Binaries/
+    <inZOIModKit>/Plugins/B1MorphCompat/Binaries/Win64/UnrealEditor.modules
+
+  Into:
+    <YourProject>/Plugins/BlueClientCompat/Binaries/
+
+Rename the plugin folder to **BlueClientCompat** only; do not change DLL file names.
+
+Fix (Epic UE 5.4.4 only)
+------------------------
+If you open a **stock** Epic Unreal Engine **5.4.4** editor (not Mod Kit), the **compiled/**
+**Binaries** built with RunUAT against that same Epic install should load without this warning.
