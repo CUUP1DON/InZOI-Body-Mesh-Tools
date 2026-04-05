@@ -1,0 +1,10 @@
+You need to create a placeholder Blueprint in your project at the exact same path, so Unreal can serialize the reference. When you package the mod, you'll exclude it.
+The cooked SKM will reference it by path, which resolves to the real one from the base game pak at runtime.
+
+Steps to create the placeholder:
+
+In the Content Browser, right-click the empty area → New Folder — create Characters/Anims
+Right-click inside that folder → Blueprint Class
+In the search box type AnimInstance, select it, click Select
+Name it exactly ABP_BonePostProcess
+Save it (Ctrl+S)
