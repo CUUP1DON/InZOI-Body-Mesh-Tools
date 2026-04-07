@@ -5,10 +5,16 @@
 This Unreal Engine plugin serializes B1 morph target data as an Asset User Data object, allowing it to survive cooking and packaging so that sliders work with custom body meshes in InZOI.
 
 ## Requirements
-Each plugin is made for a specific Unreal version: 5.4.4, 5.6.0 and Inzoi ModKit 5.4.4
+Download only one plugin depending on the version of Unreal Engine that you're using.
 
-> [!IMPORTANT]
->On April 23rd, InZOI moves to Unreal Engine 5.6. This release includes a 5.6 build of the plugin. After that date, the 5.4.4 plugin build will no longer be updated or maintained.
+5.4.4 ([Needs Unversioned Properties Fixed Rebuilt by FrancisLouiss](https://github.com/FrancisLouiss/UnrealEngine/releases/tag/5.4.4-release), GITHUB ACC REQUIRED)
+
+
+InZOI ModKit 5.4.4 (On the Epic Games Launcher)
+
+
+5.6.0 (For April 23rd Update)
+
 
 ## Things To Note Before Use
 
