@@ -10,7 +10,6 @@
   "CanContainContent": false,
   "IsBetaVersion": true,
   "Installed": false,
-  "EngineVersion": "5.4.4",
   "Modules": [
     {
       "Name": "B1MorphCompat",
