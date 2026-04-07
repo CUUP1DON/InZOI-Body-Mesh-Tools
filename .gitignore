@@ -1,3 +1,7 @@
-BlueClientCompat_for_UE5.4/compiled/BlueClientCompat \[UE5.4\].zip
-BlueClientCompat_for_UE5.6/compiled/BlueClientCompat \[UE5.6\].zip
-BlueClientCompat_for_ModKit/compiled/BlueClientCompat \[ModKit\].zip
+BlueClientCompat_for_UE5.4/compiled/BlueClientCompat\ \[UE5.4\].zip
+BlueClientCompat_for_UE5.6/compiled/BlueClientCompat\ \[UE5.6\].zip
+BlueClientCompat_for_ModKit/compiled/BlueClientCompat\ \[ModKit\].zip
+
+# Compiled build artifacts - not needed in source control
+**/compiled/**/Intermediate/
+**/compiled/**/*.pdb

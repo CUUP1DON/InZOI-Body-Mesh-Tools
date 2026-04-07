@@ -12,12 +12,12 @@
   "Installed": false,
   "Modules": [
     {
-      "Name": "BlueClient",
+      "Name": "B1MorphCompat",
       "Type": "Runtime",
       "LoadingPhase": "PreDefault"
     },
     {
-      "Name": "BlueClientCompatEditor",
+      "Name": "B1MorphCompatEditor",
       "Type": "Editor",
       "LoadingPhase": "Default"
     }
