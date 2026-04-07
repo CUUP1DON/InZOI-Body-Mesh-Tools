@@ -30,7 +30,7 @@ Download The required body JSONs too. They will be kept up to date.
 
 ## Install
 https://github.com/user-attachments/assets/187e71f1-afdf-4c29-bebd-d4342c2bac3e
-1. Unzip and drop the BlueClientCompat into your project's plugins folder
+1. Unzip and drop the BlueClientCompat folder into your project's plugins folder
 2. Open your project
 3. Go to Edit > Plugins
 4. Search for 'BlueClient'
