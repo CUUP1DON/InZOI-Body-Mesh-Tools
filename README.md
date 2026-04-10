@@ -1,34 +1,58 @@
 # InZOI Body Mesh Tools
 > [!IMPORTANT]
-> This plugin was created using the help of claude.ai.
+> This plugin was made using AI IDEs like cursor and copilot in visual studio! Most I have done is just test to make sure everything is operational. Thank claude sonnet & opus 4.6 for the code <3
 
-This Unreal Engine plugin serializes B1 morph target data as an Asset User Data object, allowing it to survive cooking and packaging so that sliders work with custom body meshes in InZOI.
+This is an Unreal Engine plugin that serializes B1 morph target data as an Asset User Data object and adds anim graph stubs for custom ABPs, allowing them to survive cooking and packaging so that sliders work with custom bodies and ABPs in InZOI.
+
+It's been a while since I've modded for InZOI so I don't know if people really need this plugin or not but it was useful to me and I was like 'why not share it?'. So, here we are. 
+
+This is a resource for modders who want to make custom bodies and keep sliders & morphs intact. Not a game mod.
 
 ## Requirements
-Download only one plugin depending on the version of Unreal Engine that you're using.
 
-5.4.4 ([Needs Unversioned Properties Fixed Rebuilt by FrancisLouiss](https://github.com/FrancisLouiss/UnrealEngine/releases/tag/5.4.4-release), GITHUB ACC REQUIRED)
+5.4.4 (Needs Unversioned Properties Fixed Rebuilt by FrancisLouiss, GITHUB ACC REQUIRED)
 
+Blender v4.5 (addon might work with newer version)
 
-InZOI ModKit 5.4.4 (On the Epic Games Launcher)
-
-
-5.6.0 (For April 23rd Update)
-
-
-## Things To Note Before Use
-
-Unreal may freeze during transfer. The tool loads and parses the entire JSON file (including all morph data and 10,000+ per-vertex deltas), so Unreal can stop responding for a while. Let it finish and do not force-quit the editor. Opening the skeletal mesh afterward may also freeze the editor while Unreal loads the mesh and the new asset user data. Wait for it to finish and do not close Unreal. Expect the same when closing the window.
 
 ## Download
 To download the plugin, go to [Releases](https://github.com/CUUP1DON/InZOI-Body-Mesh-Tools/releases) and click the .zip for your version of Unreal.
 Download The required body JSONs too. They will be kept up to date.
 
 
+## Known Issues
+Feedback and feature requests are very much wanted! I built this plugin with cursor and copilot in vs studio so if there are any issues, please, please, please!!!! let me know!!!! Below are a list of currently known issues I plan to fix.
+
+* none at the moment...
+
+## Things To Note Before Use
+
+Unreal may freeze during transfer. The tool loads and parses the entire JSON file (including all morph data and 10,000+ per-vertex deltas), so Unreal can stop responding for a while. Let it finish and do not force-quit the editor. 
+
+Opening the skeletal mesh afterward may also freeze the editor while Unreal loads the mesh and the new asset user data. Wait for it to finish and do not close Unreal. Expect the same when closing the window.
+
+## How To Install & Enable Blender Addon
+
+
+https://github.com/user-attachments/assets/9bcc21b1-e5e8-478c-8e49-3e53b79a5790
+
+
+1. Go to File then Preferences
+2. Go to the Add-ons tab and find the drop down arrow
+3. Click Install From Disk then find where you downloaded the addon's zip file
+4. Select the zip file
+5. Make sure Enable on Install is selected
+6. Click the Install From Disk button
+* Alternatively, you can drag and drop the .zip file onto the Blender window and install that way.
+
+## How To Use BMT Blender Addon
 
 
 
-## Install
+
+
+
+## How To Install & Enable Unreal Plugin
 https://github.com/user-attachments/assets/187e71f1-afdf-4c29-bebd-d4342c2bac3e
 1. Unzip and drop the BlueClientCompat folder into your project's plugins folder
 2. Open your project
