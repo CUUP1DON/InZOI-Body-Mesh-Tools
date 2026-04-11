@@ -438,6 +438,7 @@ FReply SBlueClientCompatTransferWidget::OnTransferClicked()
         return FReply::Handled();
     }
 
+    FString ImportMessage;
     FString OutMessage;
     bool bImportOk = false;
 
@@ -450,7 +451,7 @@ FReply SBlueClientCompatTransferWidget::OnTransferClicked()
             StatusText = FText::FromString(FString::Printf(TEXT("Blender JSON file does not exist: %s"), *BlenderJsonPath));
             return FReply::Handled();
         }
-        bImportOk = UBlueClientMorphTools::ImportMorphFromBlenderJson(TargetMesh, BlenderJsonPath, OutMessage);
+        bImportOk = UBlueClientMorphTools::ImportMorphFromBlenderJson(TargetMesh, BlenderJsonPath, ImportMessage);
     }
     else
     {
@@ -466,12 +467,12 @@ FReply SBlueClientCompatTransferWidget::OnTransferClicked()
             StatusText = FText::FromString(FString::Printf(TEXT("JSON file does not exist: %s"), *JsonFilePath));
             return FReply::Handled();
         }
-        bImportOk = UBlueClientMorphTools::ImportB1MorphUserDataFromFModelJsonFile(TargetMesh, JsonFilePath, OutMessage);
+        bImportOk = UBlueClientMorphTools::ImportB1MorphUserDataFromFModelJsonFile(TargetMesh, JsonFilePath, ImportMessage);
     }
 
     if (!bImportOk)
     {
-        StatusText = FText::FromString(OutMessage);
+        StatusText = FText::FromString(ImportMessage);
         return FReply::Handled();
     }
 
@@ -483,7 +484,7 @@ FReply SBlueClientCompatTransferWidget::OnTransferClicked()
     }
 
     bLastTransferOk = true;
-    StatusText = FText::FromString(FString::Printf(TEXT("Transfer complete. %s Save the mesh asset."), *OutMessage));
+    StatusText = FText::FromString(FString::Printf(TEXT("%s  AnimBP: %s  Save the mesh asset."), *ImportMessage, *OutMessage));
     return FReply::Handled();
 }
 

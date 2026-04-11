@@ -369,9 +369,52 @@ bool UBlueClientMorphTools::ImportMorphFromBlenderJson(USkeletalMesh* TargetMesh
     }
 
     // ── Parse Blender vertex data ────────────────────────────────────────────
-    // Blender exports world-space positions in meters (Z-up, -Y forward).
-    // UE render buffer positions are in centimetres (Z-up, X-forward).
-    // Conversion: UE.X = Blender.X * 100, UE.Y = -Blender.Y * 100, UE.Z = Blender.Z * 100
+    // Three possible file formats, all from the same "basisPos" array field:
+    //   1. Old backup addon (v0.0.3)  — no unitScale field, positions in raw UE cm  (~175 cm tall body)
+    //   2. New addon pre-session      — no unitScale field, positions already in metres (~1.75 m tall body)
+    //   3. New addon post-session     — unitScale field present, positions in metres
+    //
+    // Using the unitScale field as the sole discriminant is unreliable because
+    // formats 1 and 2 are both missing it.  Instead we use the same heuristic
+    // as the Blender exporter: sample the first few basisPos values and check
+    // the maximum absolute coordinate.  A body in metres has coords < 10;
+    // a body in UE cm has coords > 10 (torso Z ≈ 80-175 cm).
+    // The unitScale field (if present) is kept for the status message only.
+
+    double ParsedUnitScale = 0.0;
+    const bool bHasUnitScale = Root->TryGetNumberField(TEXT("unitScale"), ParsedUnitScale);
+
+    FString BlenderObjectName;
+    Root->TryGetStringField(TEXT("blenderObject"), BlenderObjectName);
+
+    // Detect scale from coordinate magnitudes before parsing all vertices.
+    // Sample up to 20 vertices to find the maximum absolute coordinate value.
+    float MaxSampleCoord = 0.0f;
+    {
+        const int32 SampleCount = FMath::Min(20, VerticesJson->Num());
+        for (int32 i = 0; i < SampleCount; ++i)
+        {
+            const TSharedPtr<FJsonValue>& Val = (*VerticesJson)[i];
+            if (!Val.IsValid() || Val->Type != EJson::Object) continue;
+            const TSharedPtr<FJsonObject>& V = Val->AsObject();
+            if (!V.IsValid()) continue;
+            const TArray<TSharedPtr<FJsonValue>>* BasisArr = nullptr;
+            if (!V->TryGetArrayField(TEXT("basisPos"), BasisArr) || !BasisArr || BasisArr->Num() < 3) continue;
+            for (int32 k = 0; k < 3; ++k)
+            {
+                const float Coord = FMath::Abs(static_cast<float>((*BasisArr)[k]->AsNumber()));
+                if (Coord > MaxSampleCoord) MaxSampleCoord = Coord;
+            }
+        }
+    }
+
+    // Threshold of 10: separates UE-cm scale (~80-175) from metre scale (~0.8-1.75)
+    const bool bPositionsInCm = MaxSampleCoord > 10.0f;
+    const float PosToUECm = bPositionsInCm ? 1.0f : 100.0f;
+
+    const FString FormatDescription = bPositionsInCm
+        ? TEXT("legacy format, cm (old addon)")
+        : (bHasUnitScale ? TEXT("new format, metres") : TEXT("new format pre-session, metres"));
 
     struct FBlenderVertex
     {
@@ -393,10 +436,9 @@ bool UBlueClientMorphTools::ImportMorphFromBlenderJson(USkeletalMesh* TargetMesh
         return true;
     };
 
-    auto BlenderToUE = [](const FVector3f& B, bool bScale) -> FVector3f
+    auto BlenderToUE = [](const FVector3f& B, float S) -> FVector3f
     {
-        // Blender (X, Y, Z) -> UE (X, -Y, Z), scale metres -> cm
-        const float S = bScale ? 100.0f : 1.0f;
+        // Blender (X, Y, Z) -> UE (X, -Y, Z) with optional scale S.
         return FVector3f(B.X * S, -B.Y * S, B.Z * S);
     };
 
@@ -413,12 +455,12 @@ bool UBlueClientMorphTools::ImportMorphFromBlenderJson(USkeletalMesh* TargetMesh
         if (!ReadVec3(V, TEXT("deformedNormal"),  DeformedNormal)) continue;
 
         FBlenderVertex BV;
-        BV.Position      = BlenderToUE(BasisPos,      /*bScale=*/true);
-        BV.PositionDelta = BlenderToUE(Delta,          /*bScale=*/true);
+        BV.Position      = BlenderToUE(BasisPos,      PosToUECm);
+        BV.PositionDelta = BlenderToUE(Delta,          PosToUECm);
 
         // TangentZDelta = deformed normal - basis normal (both unit, axis-converted)
-        const FVector3f UEBasisN    = BlenderToUE(BasisNormal,    /*bScale=*/false);
-        const FVector3f UEDeformedN = BlenderToUE(DeformedNormal, /*bScale=*/false);
+        const FVector3f UEBasisN    = BlenderToUE(BasisNormal,    /*S=*/1.0f);
+        const FVector3f UEDeformedN = BlenderToUE(DeformedNormal, /*S=*/1.0f);
         BV.TangentZDelta = UEDeformedN - UEBasisN;
 
         BlenderVerts.Add(BV);
@@ -559,7 +601,9 @@ bool UBlueClientMorphTools::ImportMorphFromBlenderJson(USkeletalMesh* TargetMesh
         TotalDeltas += LI.Vertices.Num();
 
     OutMessage = FString::Printf(
-        TEXT("Blender import complete: %d Blender deltas -> %d render-buffer deltas across %d LODs written to %s."),
+        TEXT("Blender import complete (%s, source: \"%s\"): %d Blender deltas -> %d render-buffer deltas across %d LODs written to %s."),
+        *FormatDescription,
+        BlenderObjectName.IsEmpty() ? TEXT("unknown") : *BlenderObjectName,
         BlenderVerts.Num(), TotalDeltas, NewUD->MorphTargetDatas[0].LODInfos.Num(), *TargetMesh->GetName());
     UE_LOG(LogTemp, Display, TEXT("%s %s"), LogPrefix, *OutMessage);
     return true;
