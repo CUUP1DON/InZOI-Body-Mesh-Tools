@@ -1,0 +1,29 @@
+{
+	"FileVersion": 3,
+	"Version": 2,
+	"VersionName": "2.1",
+	"FriendlyName": "BlueClient Compatibility (with Jiggle)",
+	"Description": "Extends BlueClient morph user-data stubs with B1BonePostProcessAnimInstance and B1AnimNode_BoneGroupTransform so Jiggle-physics ABPs can also carry inZOI slider/morph data.",
+	"Category": "inZOI",
+	"CreatedBy": "Local Modding Tools",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"EngineVersion": "5.6.0",
+	"CanContainContent": false,
+	"IsBetaVersion": true,
+	"Installed": true,
+	"Modules": [
+		{
+			"Name": "BlueClient",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault"
+		},
+		{
+			"Name": "BlueClientEditor",
+			"Type": "UncookedOnly",
+			"LoadingPhase": "Default"
+		}
+	]
+}
